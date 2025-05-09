@@ -86,22 +86,29 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        try {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+        val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
+            priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+            interval = 1000
+            fastestInterval = 500
+            numUpdates = 1
+        }
+
+        val locationCallback = object : com.google.android.gms.location.LocationCallback() {
+            override fun onLocationResult(locationResult: com.google.android.gms.location.LocationResult) {
+                val location = locationResult.lastLocation
                 if (location != null) {
                     val lat = location.latitude
                     val lon = location.longitude
                     WeatherTask(null, lat, lon).execute()
                 } else {
-                    Toast.makeText(this, "Unable to get location", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Unable to get location", Toast.LENGTH_SHORT).show()
                 }
-            }.addOnFailureListener {
-                Toast.makeText(this, "Failed to get location. Please try again.", Toast.LENGTH_SHORT).show()
             }
-        } catch (e: SecurityException) {
-            Toast.makeText(this, "Location permission required to access weather data.", Toast.LENGTH_SHORT).show()
         }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
+
 
     inner class WeatherTask(private val city: String? = null, private val lat: Double? = null, private val lon: Double? = null) :
         AsyncTask<String, Void, String?>() {
@@ -177,3 +184,4 @@ class MainActivity : AppCompatActivity() {
         const val LOCATION_PERMISSION_REQUEST_CODE = 100
     }
 }
+
