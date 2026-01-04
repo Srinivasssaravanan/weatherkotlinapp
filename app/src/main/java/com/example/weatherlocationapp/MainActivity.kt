@@ -19,7 +19,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val API: String = "47a097065d990060948a85c7857a168e" // Replace with your API Key
+    private val API: String = "47a097065d990060948a85c7857a168e" 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
