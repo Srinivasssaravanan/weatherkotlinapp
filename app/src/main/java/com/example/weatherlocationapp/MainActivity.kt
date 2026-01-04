@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         currentLocationButton.setOnClickListener {
             if (checkPermission()) {
-                getCurrentLocationWeather()
+                getCurrentLocation()
             } else {
                 requestPermission()
             }
@@ -73,14 +73,14 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocationWeather()
+                getCurrentLocation()
             } else {
                 Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun getCurrentLocationWeather() {
+    private fun getCurrentLocation() {
         val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
             priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
             interval = 1000
