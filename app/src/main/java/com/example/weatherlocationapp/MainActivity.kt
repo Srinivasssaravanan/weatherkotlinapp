@@ -42,22 +42,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         currentLocationButton.setOnClickListener {
-            if (checkLocationPermission()) {
+            if (checkPermission()) {
                 getCurrentLocationWeather()
             } else {
-                requestLocationPermission()
+                requestPermission()
             }
         }
     }
 
-    private fun checkLocationPermission(): Boolean {
+    private fun checkPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestLocationPermission() {
+    private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
