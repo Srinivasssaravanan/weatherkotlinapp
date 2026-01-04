@@ -81,11 +81,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getCurrentLocationWeather() {
-        if (!checkLocationPermission()) {
-            requestLocationPermission()
-            return
-        }
-
         val locationRequest = com.google.android.gms.location.LocationRequest.create().apply {
             priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
             interval = 1000
